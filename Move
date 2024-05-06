@@ -12,7 +12,7 @@ drivetrain = DriveTrain(left_drive_smart, right_drive_smart, 319.19, 295, 40, MM
 
 
 # wait for rotation sensor to fully initialize
-wait(30, MSEC)
+wait(3000, MSEC)
 
 def play_vexcode_sound(sound_name):
     # Helper to make playing sounds from the V5 in VEXcode easier and
