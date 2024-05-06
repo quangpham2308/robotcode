@@ -1,0 +1,78 @@
+#region VEXcode Generated Robot Configuration
+from vex import *
+import urandom
+
+# Brain should be defined by default
+brain=Brain()
+
+# Robot configuration code
+left_drive_smart = Motor(Ports.PORT1, GearSetting.RATIO_18_1, False)
+right_drive_smart = Motor(Ports.PORT10, GearSetting.RATIO_18_1, True)
+drivetrain = DriveTrain(left_drive_smart, right_drive_smart, 319.19, 295, 40, MM, 1)
+distance_2 = Distance(Ports.PORT2)
+
+
+# wait for rotation sensor to fully initialize
+wait(30, MSEC)
+
+
+def play_vexcode_sound(sound_name):
+    # Helper to make playing sounds from the V5 in VEXcode easier and
+    # keeps the code cleaner by making it clear what is happening.
+    print("VEXPlaySound:" + sound_name)
+    wait(5, MSEC)
+
+# add a small delay to make sure we don't print in the middle of the REPL header
+wait(200, MSEC)
+# clear the console to make sure we don't have the REPL in the console
+print("\033[2J")
+
+#endregion VEXcode Generated Robot Configuration
+
+# ----------------------------------------------------------------------------
+#                                                                            
+#    Project:        Distance Sensing
+#    Description:    This example will show all of the available commands
+#                    for using the Distance Sensor
+#    Configuration:  V5 Speedbot (Drivetrain 2-motor, No Gyro)
+#                    Distance Sensor in Port 2       
+#                                                                            
+# ----------------------------------------------------------------------------
+
+# Library imports
+from vex import *
+
+# Begin project code
+
+# Print all Distance sensing values to the screen in an infinite loop
+while True:
+    # Clear the screen and set the cursor to top left corner on each loop
+    brain.screen.clear_screen()
+    brain.screen.set_cursor(1, 1)
+
+    brain.screen.print("Found Object?:", distance_2.is_object_detected())
+    brain.screen.next_row()
+
+    if distance_2.is_object_detected():
+        if distance_2.object_size() == ObjectSizeType.LARGE:
+            brain.screen.print("Object: Large")
+        elif distance_2.object_size() == ObjectSizeType.MEDIUM:
+            brain.screen.print("Object: Medium")
+        else:
+            brain.screen.print("Object: Small")
+    else:
+        brain.screen.print("No object")
+
+    brain.screen.next_row()
+
+    brain.screen.print("Distance - Inches:", distance_2.object_distance(INCHES))
+    brain.screen.next_row()
+
+    brain.screen.print("Distance - MM:", distance_2.object_distance(MM))
+    brain.screen.next_row()
+    
+    brain.screen.print("Object velocity - M/S:", distance_2.object_velocity())
+    brain.screen.next_row()
+
+    # A brief delay to allow text to be printed without distortion or tearing
+    wait(50,MSEC)
